@@ -21,7 +21,7 @@
 
   </div> -->
 
-  <div>
+  <!-- <div>
     @if(count($tasks)) 
       @foreach ($tasks as $task)
       <h3>{{ $task->id }}</h3>
@@ -30,11 +30,11 @@
     @else
       <div>no tasks</div>
     @endif
-  </div>
+  </div> -->
 
   <div>
     @forelse ($tasks as $task)
-      <li>{{$task->title}}</li>
+      <a href="{{route('tasks.show', ['id' => $task->id])}}">{{$task->title}}</a>
     @empty
       <p>no tasks</p>
     @endforelse

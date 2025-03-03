@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 // pass variables as an associative array. render on homepage with {{ $variable-name }}.also use the isset
 // copied this task list from his github and made new get route with the function () use ($tasks)
 // did if else statement in index.blades.  check this against handlebars. seems similar
+// made route to show one single task and added link to index.blade to go to tasks.show route
 
 
 
@@ -79,13 +80,21 @@ $tasks = [
 
 $notasks = [''];
 
-
-
-Route::get('/', function () use($tasks) {
-    return view('index', [
-        'tasks' => $notasks
-    ]);
+Route::get('/', function() {
+  return redirect()->route('tasks.index');
 });
+
+
+
+Route::get('/tasks', function () use($tasks) {
+    return view('index', [
+        'tasks' => $tasks
+    ]);
+})->name('tasks.index');
+
+Route::get('/tasks/{id}', function ($id) {
+  return 'one single task';  
+})->name('tasks.show');
 
 
 // Route::get('/', function () {
@@ -95,20 +104,20 @@ Route::get('/', function () use($tasks) {
 //     ]);
 // });
 
-Route::get('/hello', function () {
-    return "hello";
-})->name('hello');
+// Route::get('/hello', function () {
+//     return "hello";
+// })->name('hello');
 
-Route::get('/greet/{name}', function ($name) {
-    return 'hello ' . $name . '!';
-});
+// Route::get('/greet/{name}', function ($name) {
+//     return 'hello ' . $name . '!';
+// });
 
-Route::get('/hallo', function () {
-    return redirect()->route('hello');
-});
+// Route::get('/hallo', function () {
+//     return redirect()->route('hello');
+// });
 
-Route::fallback(function () {
-    return 'Still got somewhere';
-});
+// Route::fallback(function () {
+//     return 'Still got somewhere';
+// });
 
 // php artisan route:list
