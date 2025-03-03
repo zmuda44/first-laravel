@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,8 +23,14 @@ use Illuminate\Support\Facades\Route;
 // copied this task list from his github and made new get route with the function () use ($tasks)
 // did if else statement in index.blades.  check this against handlebars. seems similar
 // made route to show one single task and added link to index.blade to go to tasks.show route
-
-
+// create new file show.blade which matches tasks.show
+// use collect() function to allow you to call methods and then you can use firstWhere()
+// in that function he typed abort () with stuff in it and it comes from this code: use Illuminate\Http\Response;  i had to add this though not sure why he didnt
+// rendered elemnts on to show.blade using the object notation
+// created layouts folder in views and app.blade.php and did html shell
+// did @extends in show.blade like import or require?
+// did the yields in the app.blade and sections in the show.blade and 
+// deelted the html skeleton from index.blade since layout replaces it and did the same with show.blade
 
 class Task
 {
@@ -84,16 +91,21 @@ Route::get('/', function() {
   return redirect()->route('tasks.index');
 });
 
-
-
 Route::get('/tasks', function () use($tasks) {
     return view('index', [
         'tasks' => $tasks
     ]);
 })->name('tasks.index');
 
-Route::get('/tasks/{id}', function ($id) {
-  return 'one single task';  
+Route::get('/tasks/{id}', function ($id) use($tasks) {
+  $task = collect($tasks)->firstWhere('id', $id);
+
+  if (!$task) {
+    abort(Response::HTTP_NOT_FOUND);
+  }
+
+  return view('show', ['task' => $task]);
+  
 })->name('tasks.show');
 
 
