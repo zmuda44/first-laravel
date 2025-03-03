@@ -1,11 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
+
+
+  @extends('layouts.app')
+
+  @section('title', 'the list of tasks')
+
+  @section ('content')
+
+  <div>
+    @forelse ($tasks as $task)
+      <a href="{{route('tasks.show', ['id' => $task->id])}}">{{$task->title}}</a>
+    @empty
+      <p>no tasks</p>
+    @endforelse
+
+  </div>
+
+  
   <!-- @isset($name)
   <h1>Homepage</h1>
   <h2>Welcome {{ $name }}</h2>
@@ -32,13 +42,4 @@
     @endif
   </div> -->
 
-  <div>
-    @forelse ($tasks as $task)
-      <a href="{{route('tasks.show', ['id' => $task->id])}}">{{$task->title}}</a>
-    @empty
-      <p>no tasks</p>
-    @endforelse
-
-  </div>
-</body>
-</html>
+  @endsection
