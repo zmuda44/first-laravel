@@ -15,7 +15,14 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    // got pgsql from this file ot put in .env file. also changed the code in the line
+    //below to 'pgsql' was 'mysql'
+    // also changed database and username to my db name from 'forge'
+    // all this was from a different video on how to setup postgres with laravel not frmo main vid
+// then had to go into php.ini file in xammp. the only thing is that do you need to install xammp to get php?
+// uncommented this line in php.ini extension=pdo_pgsql
+// last thing i had to do was actually create the db in postgres. he didn't really show himself making the db i dont think but he did have a db with the prper name made in docker already
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -68,8 +75,8 @@ return [
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
+            'database' => env('DB_DATABASE', 'laravel-10-task-list'),
+            'username' => env('DB_USERNAME', 'postgres'),
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
