@@ -22,7 +22,9 @@ return [
 // then had to go into php.ini file in xammp. the only thing is that do you need to install xammp to get php?
 // uncommented this line in php.ini extension=pdo_pgsql
 // last thing i had to do was actually create the db in postgres. he didn't really show himself making the db i dont think but he did have a db with the prper name made in docker already
-    'default' => env('DB_CONNECTION', 'pgsql'),
+// actually, he did get something that asked if he wanted to craete the db. for some reason i didnt 
+
+'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
