@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
 
-    // You created the title, description and long description below. i believe this migration was made with the artisan command
+    // You created the title, description and long description and completed below. i believe this migration was made with the artisan command
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();

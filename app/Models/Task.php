@@ -9,5 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
+    //need this HasFactory to run the factories file for the seeds
     use HasFactory;
 }
