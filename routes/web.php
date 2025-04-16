@@ -87,6 +87,8 @@ class Task
 
 $notasks = [''];
 
+// can type php artisan tinker and then run the find and get commands in the command line
+
 Route::get('/', function() {
   return redirect()->route('tasks.index');
 });
@@ -95,9 +97,14 @@ Route::get('/', function() {
 Route::get('/tasks', function () {
     return view('index', [
         // 'tasks' => $tasks
-        'tasks' => \App\Models\Task::latest()->where('completed', true)->get()
+        //'tasks' => \App\Models\Task::latest()->where('completed', true)->get()
+        'tasks' => \App\Models\Task::latest()->get()
     ]);
 })->name('tasks.index');
+
+// important note: keep in mind it needs to go above the tasks/{id} below, because it thinks create is the id parameter
+// if you aren't passing any info to the view you dont need a get method, you can use view. then do the route like normal and the name of the blade as the second parameter
+Route::view('/tasks/create', 'create');
 
 // commented out becaus eno longer using $tasks Route::get('/tasks/{id}', function ($id) use($tasks) {
   Route::get('/tasks/{id}', function ($id) {
@@ -116,6 +123,7 @@ Route::get('/tasks', function () {
   return view('show', ['task' => \App\Models\Task::findOrFail($id)]);
   
 })->name('tasks.show');
+
 
 
 // Route::get('/', function () {
