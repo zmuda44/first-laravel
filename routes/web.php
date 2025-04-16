@@ -104,7 +104,8 @@ Route::get('/tasks', function () {
 
 // important note: keep in mind it needs to go above the tasks/{id} below, because it thinks create is the id parameter
 // if you aren't passing any info to the view you dont need a get method, you can use view. then do the route like normal and the name of the blade as the second parameter
-Route::view('/tasks/create', 'create');
+Route::view('/tasks/create', 'create')
+->name('tasks.create');
 
 // commented out becaus eno longer using $tasks Route::get('/tasks/{id}', function ($id) use($tasks) {
   Route::get('/tasks/{id}', function ($id) {
