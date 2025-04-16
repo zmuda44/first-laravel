@@ -1,8 +1,12 @@
 <?php
 
+// added this and request
+
+use App\Models\Task;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -100,7 +104,8 @@ Route::get('/tasks', function () {
     return view('index', [
         // 'tasks' => $tasks
         //'tasks' => \App\Models\Task::latest()->where('completed', true)->get()
-        'tasks' => \App\Models\Task::latest()->get()
+        //'tasks' => \App\Models\Task::latest()->get()
+        'tasks' => Task::latest()->get()
     ]);
 })->name('tasks.index');
 
@@ -123,12 +128,29 @@ Route::view('/tasks/create', 'create')
   
 
   // return view('show', ['task' => $task]);
-  return view('show', ['task' => \App\Models\Task::findOrFail($id)]);
+  // going to import Task so don't need it written out return view('show', ['task' => \App\Models\Task::findOrFail($id)]);
+  // return view('show', ['task' => \App\Models\Task::findOrFail($id)]);
+  return view('show', ['task' => Task::findOrFail($id)]);
   
 })->name('tasks.show');
 
 Route::post('/tasks', function (Request $request) {
-  dd($request->all());
+  //dd($request->all()); originally just sent the request back to the page
+  $data = $request->validate([
+    'title'=> 'required|max:255',
+    'description'=> 'required',
+    'long_description'=> 'required'
+  ]);
+
+  $task = new Task;
+  $task->title = $data['title'];
+  $task->description = $data['description'];
+  $task->long_description = $data['long_description'];
+
+  $task->save();
+
+  return redirect()->route('tasks.show', ['id' => $task->id]);
+  
 })->name("tasks.store");
 
 
