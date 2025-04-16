@@ -46,67 +46,84 @@ class Task
   }
 }
 
-$tasks = [
-  new Task(
-    1,
-    'Buy groceries',
-    'Task 1 description',
-    'Task 1 long description',
-    false,
-    '2023-03-01 12:00:00',
-    '2023-03-01 12:00:00'
-  ),
-  new Task(
-    2,
-    'Sell old stuff',
-    'Task 2 description',
-    null,
-    false,
-    '2023-03-02 12:00:00',
-    '2023-03-02 12:00:00'
-  ),
-  new Task(
-    3,
-    'Learn programming',
-    'Task 3 description',
-    'Task 3 long description',
-    true,
-    '2023-03-03 12:00:00',
-    '2023-03-03 12:00:00'
-  ),
-  new Task(
-    4,
-    'Take dogs for a walk',
-    'Task 4 description',
-    null,
-    false,
-    '2023-03-04 12:00:00',
-    '2023-03-04 12:00:00'
-  ),
-];
+// $tasks = [
+//   new Task(
+//     1,
+//     'Buy groceries',
+//     'Task 1 description',
+//     'Task 1 long description',
+//     false,
+//     '2023-03-01 12:00:00',
+//     '2023-03-01 12:00:00'
+//   ),
+//   new Task(
+//     2,
+//     'Sell old stuff',
+//     'Task 2 description',
+//     null,
+//     false,
+//     '2023-03-02 12:00:00',
+//     '2023-03-02 12:00:00'
+//   ),
+//   new Task(
+//     3,
+//     'Learn programming',
+//     'Task 3 description',
+//     'Task 3 long description',
+//     true,
+//     '2023-03-03 12:00:00',
+//     '2023-03-03 12:00:00'
+//   ),
+//   new Task(
+//     4,
+//     'Take dogs for a walk',
+//     'Task 4 description',
+//     null,
+//     false,
+//     '2023-03-04 12:00:00',
+//     '2023-03-04 12:00:00'
+//   ),
+// ];
 
 $notasks = [''];
+
+// can type php artisan tinker and then run the find and get commands in the command line
 
 Route::get('/', function() {
   return redirect()->route('tasks.index');
 });
 
-Route::get('/tasks', function () use($tasks) {
+// had ot comment out because you are no longer using the variable tasks Route::get('/tasks', function () use($tasks) {
+Route::get('/tasks', function () {
     return view('index', [
-        'tasks' => $tasks
+        // 'tasks' => $tasks
+        //'tasks' => \App\Models\Task::latest()->where('completed', true)->get()
+        'tasks' => \App\Models\Task::latest()->get()
     ]);
 })->name('tasks.index');
 
-Route::get('/tasks/{id}', function ($id) use($tasks) {
-  $task = collect($tasks)->firstWhere('id', $id);
+// important note: keep in mind it needs to go above the tasks/{id} below, because it thinks create is the id parameter
+// if you aren't passing any info to the view you dont need a get method, you can use view. then do the route like normal and the name of the blade as the second parameter
+Route::view('/tasks/create', 'create');
 
-  if (!$task) {
-    abort(Response::HTTP_NOT_FOUND);
-  }
+// commented out becaus eno longer using $tasks Route::get('/tasks/{id}', function ($id) use($tasks) {
+  Route::get('/tasks/{id}', function ($id) {
+  // $task = collect($tasks)->firstWhere('id', $id);
 
-  return view('show', ['task' => $task]);
+  // if (!$task) {
+  //   abort(Response::HTTP_NOT_FOUND);
+  // }
+  // got rid of these lines when we switched over to a db
+
+  //can also import the Task and use a variable but the array above is a class
+
+  
+
+  // return view('show', ['task' => $task]);
+  return view('show', ['task' => \App\Models\Task::findOrFail($id)]);
   
 })->name('tasks.show');
+
 
 
 // Route::get('/', function () {
