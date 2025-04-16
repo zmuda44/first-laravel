@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,19 +33,20 @@ use Illuminate\Support\Facades\Route;
 // did the yields in the app.blade and sections in the show.blade and 
 // deelted the html skeleton from index.blade since layout replaces it and did the same with show.blade
 
-class Task
-{
-  public function __construct(
-    public int $id,
-    public string $title,
-    public string $description,
-    public ?string $long_description,
-    public bool $completed,
-    public string $created_at,
-    public string $updated_at
-  ) {
-  }
-}
+// didn't really need to comment this out but did anyway
+// class Task
+// {
+//   public function __construct(
+//     public int $id,
+//     public string $title,
+//     public string $description,
+//     public ?string $long_description,
+//     public bool $completed,
+//     public string $created_at,
+//     public string $updated_at
+//   ) {
+//   }
+// }
 
 // $tasks = [
 //   new Task(
@@ -85,7 +87,7 @@ class Task
 //   ),
 // ];
 
-$notasks = [''];
+//$notasks = [''];
 
 // can type php artisan tinker and then run the find and get commands in the command line
 
@@ -124,6 +126,10 @@ Route::view('/tasks/create', 'create')
   return view('show', ['task' => \App\Models\Task::findOrFail($id)]);
   
 })->name('tasks.show');
+
+Route::post('/tasks', function (Request $request) {
+  dd($request->all());
+})->name("tasks.store");
 
 
 
